@@ -19,3 +19,11 @@ console.log(newAddedLiEle);
 let newAddedLiEleWithTag = document.getElementsByTagName("li")[4];
 console.log(newAddedLiEleWithTag);
 newAddedLiEleWithTag.style.fontWeight = "bold";
+thirdLiEle[1].style.backgroundColor = "red"
+thirdLiEle[2].style.visibility = "hidden";
+let allLi = document.querySelectorAll("li");
+allLi[1].style.color = "green";
+let allOddLi = document.querySelectorAll(":nth-child(odd)");
+allOddLi.forEach((li) => {
+    li.style.backgroundColor = "green";
+})
