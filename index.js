@@ -1,68 +1,83 @@
-let titleEle = document.getElementsByTagName("title")[0];
-console.log(titleEle.innerText)
-titleEle.innerText = "Hello Dude!";
-titleEle.style.border = "2px solid white";
-let getItemEle = document.querySelector(".title");
-getItemEle.style.fontWeight = "bold";
-getItemEle.style.color = "green";
-let thirdLiEle = document.getElementsByTagName("li");
-thirdLiEle[2].style.backgroundColor = "green"
-for(let i = 0; i < thirdLiEle.length; i++) {
-    thirdLiEle[i].style.fontWeight = "bold";
+var form = document.getElementById('addForm');
+var itemList = document.getElementById('items');
+var filter = document.getElementById('filter');
+
+// Form submit event
+form.addEventListener('submit', addItem);
+// Delete event
+itemList.addEventListener('click', removeItem);
+// Filter event
+filter.addEventListener('keyup', filterItems);
+
+// Add item
+function addItem(e){
+  e.preventDefault();
+
+  // Get input value
+  var newItem = document.getElementById('item').value;
+
+  // Create new li element
+  var li = document.createElement('li');
+  // Add class
+  li.className = 'list-group-item';
+  // Add text node with input value
+  li.appendChild(document.createTextNode(newItem));
+
+  // Create del button element
+  var deleteBtn = document.createElement('button');
+
+  // Add classes to del button
+  deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
+
+  // Append text node
+  deleteBtn.appendChild(document.createTextNode('X'));
+
+  // Append button to li
+  li.appendChild(deleteBtn);
+
+  // Append li to list
+  itemList.appendChild(li);
 }
-let newLiEle = document.createElement("li");
-newLiEle.innerText = "Item added"
-let ulEle = document.querySelector("#items");
-ulEle.appendChild(newLiEle);
-let newAddedLiEle = document.getElementsByClassName("list-group-item")[4];
-console.log(newAddedLiEle);
-let newAddedLiEleWithTag = document.getElementsByTagName("li")[4];
-console.log(newAddedLiEleWithTag);
-newAddedLiEleWithTag.style.fontWeight = "bold";
-thirdLiEle[1].style.backgroundColor = "red"
-thirdLiEle[2].style.visibility = "hidden";
-let allLi = document.querySelectorAll("li");
-allLi[1].style.color = "green";
-let allOddLi = document.querySelectorAll(":nth-child(odd)");
-allOddLi.forEach((li) => {
-    li.style.backgroundColor = "green";
+
+// Remove item
+function removeItem(e){
+  if(e.target.classList.contains('delete')){
+    if(confirm('Are You Sure?')){
+      var li = e.target.parentElement;
+      itemList.removeChild(li);
+    }
+  }
+}
+
+// Filter Items
+function filterItems(e){
+  // convert text to lowercase
+  var text = e.target.value.toLowerCase();
+  // Get lis
+  var items = itemList.getElementsByTagName('li');
+  // Convert to an array
+  Array.from(items).forEach(function(item){
+    var itemName = item.firstChild.textContent;
+    if(itemName.toLowerCase().indexOf(text) != -1){
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+let btn = document.createElement('button');
+btn.setAttribute("class","btn btn-danger btn-sm float-right edit");
+btn.innerText = "EDIT";
+console.log(btn.innerText);
+let parent = document.querySelectorAll(".list-group-item");
+// console.log(parent);
+// parent[0].appendChild(btn);
+// parent[1].appendChild(btn);
+parent.forEach((ele) => {
+    // ele.appendChild(btn);
+    let btn = document.createElement('button');
+    btn.setAttribute("class","btn btn-danger btn-sm float-right edit");
+    btn.innerText = "EDIT";
+    ele.appendChild(btn);
 })
-let parentDiv = document.querySelector("#header-title");
-// console.log(parentDiv.parentElement);
-// parentDiv.parentElement
-parentDiv.parentElement.style.backgroundColor = "white";
-
-let lastElementChild = document.querySelector("#items").lastElementChild; //The property only considers element nodes.
-// console.log(lastElementChild);
-lastElementChild.style.backgroundColor = "blue";
-
-let lastChild = document.querySelector("#items").lastChild; // This property represents the last child node of the parent, regardless of whether it is an element node, text node, comment node, etc.
-lastChild.style.backgroundColor = "red";
-
-let firstElementChild = document.querySelector("#items").firstElementChild;
-firstElementChild.style.backgroundColor = "magenta"; 
-
-let firstChildEle = document.querySelector("#items").firstChild; // Gave text node
-firstChildEle.innerText = "green";
-// console.log(firstChildEle);
-
-let nextSiblibing = document.querySelector("#items").nextSibling; // Gave text node
-// console.log(nextSiblibing);
-
-let nextElementSiblng = document.querySelector(".list-group-item").nextElementSibling;
-nextElementSiblng.style.backgroundColor = "skyblue";
-
-let previousSblng = document.querySelectorAll(".list-group-item")[2].previousSibling; // text node.
-console.log(previousSblng)
-
-let previousSblngEle = document.querySelectorAll(".list-group-item")[2].previousElementSibling; // element node
-// console.log(previousSblngEle)
-previousSblngEle.style.backgroundColor = "green"
-
-
-let selectedLi = document.querySelector(".list-group-item");
-selectedLi.setAttribute("id","selected")
-console.log(selectedLi)
-
-let createdTextnode = document.createTextNode("this is a text node");
-selectedLi.appendChild(createdTextnode);
