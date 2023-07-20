@@ -20,7 +20,13 @@ form.addEventListener("submit",function(e) {
     alert("Please enter input fields");
   } else {
     console.log(nameEntered,emailEntered);
-    localStorage.setItem("name",nameEntered);
-    localStorage.setItem("email",emailEntered);
+    let userData = {
+      name: nameEntered,
+      email: emailEntered
+    }
+    const jsonUserData = JSON.stringify(userData);
+
+    localStorage.setItem("user",jsonUserData);
+    // localStorage.setItem("email",emailEntered);
   }
 });
