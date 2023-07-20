@@ -1,32 +1,44 @@
-console.log("hiiiiii");
-let nameInpu = document.getElementById("name")
-// console.log(nameInpu.value);
-var nameEntered ="";
-nameInpu.addEventListener("keyup", function(e) {
+console.log("welcome");
+let arr = [];
+let nameInput = document.getElementById("name");
+let nameEntered = "";
+nameInput.addEventListener("keyup", function(e) {
   nameEntered = e.target.value;
-  // console.log(nameInpu.value);
-  // console.log(e.target.value);
-});
+  console.log(nameEntered);
+})
 let emailInput = document.getElementById("email");
-var emailEntered = "" ;
+let emailEntered = "";
 emailInput.addEventListener("keyup", function(e) {
   emailEntered = e.target.value;
+  console.log(emailEntered);
 })
-let form = document.getElementById("my-form");
-form.addEventListener("submit",function(e) {
+let numberInput = document.getElementById("number");
+let numberEntered = "";
+numberInput.addEventListener("keyup", function(e) {
+  numberEntered = e.target.value;
+  console.log(numberEntered);
+})
+let myForm = document.getElementById("my-form");
+console.log(myForm);
+myForm.addEventListener("submit",function(e) {
   e.preventDefault();
-  console.log("submit");
-  if (nameEntered === "" || !emailEntered === "") {
-    alert("Please enter input fields");
-  } else {
-    console.log(nameEntered,emailEntered);
-    let userData = {
-      name: nameEntered,
-      email: emailEntered
-    }
-    const jsonUserData = JSON.stringify(userData);
-
-    localStorage.setItem("user",jsonUserData);
-    // localStorage.setItem("email",emailEntered);
+  let userData = {
+    name:nameEntered,
+    email:emailEntered,
+    Phone:numberEntered
   }
-});
+  arr.push(userData);
+  console.log(arr);
+  let jsonUserData = JSON.stringify(arr);
+  localStorage.setItem("user",jsonUserData);
+  updateList();
+})
+function updateList() {
+  let parent = document.getElementById("list");
+  parent.innerHTML = ""
+  arr.forEach((userData) => {
+    let newLi = document.createElement("li");
+    newLi.textContent = `${userData.name} - ${userData.email} - ${userData.Phone}`;
+    parent.appendChild(newLi);
+  })
+}
