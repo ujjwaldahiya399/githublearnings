@@ -29,8 +29,9 @@ myForm.addEventListener("submit",function(e) {
   }
   arr.push(userData);
   console.log(arr);
-  let jsonUserData = JSON.stringify(arr);
+  let jsonUserData = JSON.stringify(userData);
   localStorage.setItem("user",jsonUserData);
+  myForm.reset()
   updateList();
 })
 function updateList() {
@@ -40,5 +41,18 @@ function updateList() {
     let newLi = document.createElement("li");
     newLi.textContent = `${userData.name} - ${userData.email} - ${userData.Phone}`;
     parent.appendChild(newLi);
+    let deleteBtn = document.createElement("button");
+    deleteBtn.addEventListener("click",() => {
+      localStorage.removeItem("user")
+      parent.removeChild(newLi);
+    });
+    deleteBtn.textContent = "delete"
+    deleteBtn.setAttribute("id", "delete");
+    newLi.appendChild(deleteBtn);
+
   })
+}
+function deleteTask(e) {
+  console.log("delete");
+
 }
