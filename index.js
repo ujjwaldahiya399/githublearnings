@@ -30,7 +30,7 @@ myForm.addEventListener("submit",function(e) {
   arr.push(userData);
   console.log(arr);
   let jsonUserData = JSON.stringify(userData);
-  localStorage.setItem("user",jsonUserData);
+  localStorage.setItem(userData.email,JSON.stringify(userData));
   myForm.reset()
   updateList();
 })
@@ -43,12 +43,31 @@ function updateList() {
     parent.appendChild(newLi);
     let deleteBtn = document.createElement("button");
     deleteBtn.addEventListener("click",() => {
-      localStorage.removeItem("user")
+      localStorage.removeItem(userData.email);
       parent.removeChild(newLi);
     });
     deleteBtn.textContent = "delete"
     deleteBtn.setAttribute("id", "delete");
     newLi.appendChild(deleteBtn);
+    let editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.setAttribute("id", "edit");
+    editBtn.addEventListener("click",() => {
+      // console.log("edit")
+      let dataFromStorage = localStorage.getItem(userData.email)
+      let dataObj = JSON.parse(dataFromStorage);
+      const name = dataObj.name;
+      const email = dataObj.email;
+      const phone = dataObj.Phone;
+      console.log(name, email, phone);
+      document.getElementById("name").value = name;
+      document.getElementById("email").value = email;
+      document.getElementById("number").value = phone;
+      parent.removeChild(newLi);
+      localStorage.removeItem(userData.email);
+
+    })
+    newLi .appendChild(editBtn);
 
   })
 }
